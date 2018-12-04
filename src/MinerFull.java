@@ -3,7 +3,7 @@ import processing.core.PImage;
 import java.util.List;
 import java.util.Optional;
 
-public class MinerFull extends Movable {
+public class MinerFull extends Miner {
     private int resourceLimit;
     private int resourceCount;
 
@@ -38,6 +38,7 @@ public class MinerFull extends Movable {
         Interactive miner =  new MinerNotFull(this.getId(), this.resourceLimit,
                 this.getPosition(), this.getActionPeriod(), this.getAnimationPeriod(),
                 this.getImages());
+       // System.out.printf("Action Period: %d, Animation Period; %d\n", this.getActionPeriod(), this.getAnimationPeriod());
 
         world.removeEntity(this);
         scheduler.unscheduleAllEvents(this);

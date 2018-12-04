@@ -39,6 +39,9 @@ public final class VirtualWorld
 
     public static double timeScale = 1.0;
 
+    boolean wizardSpawned = false;
+    boolean midasSpawned = false;
+
     private ImageStore imageStore;
     private WorldModel world;
     private WorldView view;
@@ -104,8 +107,8 @@ public final class VirtualWorld
     }
 
     public void mouseClicked() {
-        for (int x = -1; x < 2; x++) {
-            for (int y = -1; y < 2; y++) {
+        for (int x = -2; x < 3; x++) {
+            for (int y = -2; y < 3; y++) {
                 Point clickPos = new Point(mouseX / 32 + x + this.view.getViewport().getCol(),
                         mouseY / 32 + y + this.view.getViewport().getRow());
                 if (world.withinBounds(clickPos)) {
@@ -113,14 +116,22 @@ public final class VirtualWorld
                 }
                 if (world.getOccupancyCell(clickPos) instanceof MinerFull ||
                     world.getOccupancyCell(clickPos) instanceof MinerNotFull) {
-                    Movable miner = (Movable)world.getOccupancyCell(clickPos);
-                    GoldMiner goldMiner = new GoldMiner(miner.getId(), miner.getPosition(), miner.getActionPeriod(),
-                        miner.getAnimationPeriod(), imageStore.getImageList(GOLD_MINER_KEY));
-                    world.removeEntity(miner);
-                    scheduler.unscheduleAllEvents(miner);
-
-                    world.addEntity(goldMiner);
-                    goldMiner.scheduleActions(scheduler, world, imageStore);
+                    Miner miner = (Miner)world.getOccupancyCell(clickPos);
+                    miner.transformGold(world, scheduler, imageStore);
+                }
+                if (!wizardSpawned && !world.isOccupied(clickPos)) {
+                    Movable wizard = new Wizard("wizard", clickPos,
+                            imageStore.getImageList("wizard"), 999, 954);
+                    world.addEntity(wizard);
+                    wizard.scheduleActions(scheduler, world, imageStore);
+                    wizardSpawned = true;
+                }
+                if (!midasSpawned && !world.isOccupied(clickPos)) {
+                    Movable midas = new Midas("midas", clickPos,
+                            imageStore.getImageList("midas"), 900, 954);
+                    world.addEntity(midas);
+                    midas.scheduleActions(scheduler, world, imageStore);
+                    midasSpawned = true;
                 }
             }
         }

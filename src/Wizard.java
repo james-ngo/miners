@@ -1,13 +1,10 @@
 import processing.core.PImage;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
-
-public class GoldMiner extends Movable {
-    private int resourceLimit;
-    public GoldMiner(String id, Point position, int actionPeriod,
-                     int animationPeriod, List<PImage> images) {
-        super(id, position, images, 0, actionPeriod, animationPeriod);
+public class Wizard extends Movable {
+    public Wizard(String id, Point pos, List<PImage> images, int animationPeriod, int actionPeriod) {
+        super(id, pos, images, 0, animationPeriod, actionPeriod);
     }
     protected boolean moveTo(WorldModel world,
                              Entity target, EventScheduler scheduler) {
@@ -28,16 +25,17 @@ public class GoldMiner extends Movable {
         }
     }
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> notFullTarget = this.getPosition().findNearest(world, "Ore");
+        Optional<Entity> wizardTarget = this.getPosition().findNearest(world, "GoldMiner");
 
-        if (!notFullTarget.isPresent() ||
-                !this.moveTo(world, notFullTarget.get(), scheduler)) {
+        if (!wizardTarget.isPresent() ||
+                !this.moveTo(world, wizardTarget.get(), scheduler)) {
+            
             scheduler.scheduleEvent(this,
                     new Activity(this, world, imageStore),
                     this.getActionPeriod());
         }
-        else if (this.moveTo(world, notFullTarget.get(), scheduler)) {
-            ((Ore)notFullTarget.get()).transform(world, scheduler, imageStore);
+        else if (this.moveTo(world, wizardTarget.get(), scheduler)) {
+            ((GoldMiner)wizardTarget.get()).transform(world, scheduler, imageStore);
             scheduler.scheduleEvent(this,
                     new Activity(this, world, imageStore),
                     this.getActionPeriod());
@@ -51,17 +49,4 @@ public class GoldMiner extends Movable {
         scheduler.scheduleEvent(this,
                 new Animation(this, 0), this.getAnimationPeriod());
     }
-
-    public void transform(WorldModel world,
-                          EventScheduler scheduler, ImageStore imageStore) {
-        Interactive miner = new MinerNotFull(this.getId(), this.resourceLimit, this.getPosition(), this.getActionPeriod(),
-                this.getAnimationPeriod(),imageStore.getImageList("miner"));
-
-        world.removeEntity(this);
-        scheduler.unscheduleAllEvents(this);
-
-        world.addEntity(miner);
-        miner.scheduleActions(scheduler, world, imageStore);
-    }
 }
-
