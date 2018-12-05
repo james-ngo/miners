@@ -10,7 +10,7 @@ public class MinerNotFull extends Miner {
     public MinerNotFull(String id, int resourceLimit,
                         Point position, int actionPeriod, int animationPeriod,
                         List<PImage> images) {
-        super(id, position, images, 0, actionPeriod, animationPeriod);
+        super(id, position, images, 0, actionPeriod, animationPeriod, resourceLimit);
         this.resourceLimit = resourceLimit;
         this.resourceCount = 0;
     }

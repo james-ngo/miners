@@ -1,0 +1,7 @@
+Arrival of King Midas Event
+
+When the mouse is clicked, a 5x5 area surrounding the cursor turns to gold and King Midas and a powerful wizard are
+summoned. Any miners caught in the area are turned to gold miners. Gold miners are unable to collect ore and transform
+any ore they touch into gold ore. Gold ore can be collected by regular miners. King Midas chases untransformed miners
+and turns them into gold miners. The wizard attempts to return the gold miners to their original state. Midas is
+faster than most miners while the wizard is slower than most of the miners.

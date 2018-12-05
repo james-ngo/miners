@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public class Wizard extends Movable {
     public Wizard(String id, Point pos, List<PImage> images, int animationPeriod, int actionPeriod) {
-        super(id, pos, images, 0, animationPeriod, actionPeriod);
+        super(id, pos, images, 0, actionPeriod, animationPeriod);
     }
     protected boolean moveTo(WorldModel world,
                              Entity target, EventScheduler scheduler) {

@@ -119,19 +119,19 @@ public final class VirtualWorld
                     Miner miner = (Miner)world.getOccupancyCell(clickPos);
                     miner.transformGold(world, scheduler, imageStore);
                 }
-                if (!wizardSpawned && !world.isOccupied(clickPos)) {
-                    Movable wizard = new Wizard("wizard", clickPos,
-                            imageStore.getImageList("wizard"), 999, 954);
-                    world.addEntity(wizard);
-                    wizard.scheduleActions(scheduler, world, imageStore);
-                    wizardSpawned = true;
-                }
                 if (!midasSpawned && !world.isOccupied(clickPos)) {
                     Movable midas = new Midas("midas", clickPos,
-                            imageStore.getImageList("midas"), 900, 954);
+                            imageStore.getImageList("midas"), 100, 555);
                     world.addEntity(midas);
                     midas.scheduleActions(scheduler, world, imageStore);
                     midasSpawned = true;
+                }
+                if (!wizardSpawned && !world.isOccupied(clickPos)) {
+                    Movable wizard = new Wizard("wizard", clickPos,
+                            imageStore.getImageList("wizard"), 100, 955);
+                    world.addEntity(wizard);
+                    wizard.scheduleActions(scheduler, world, imageStore);
+                    wizardSpawned = true;
                 }
             }
         }

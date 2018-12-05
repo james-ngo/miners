@@ -6,8 +6,9 @@ import java.util.List;
 public class GoldMiner extends Movable {
     private int resourceLimit;
     public GoldMiner(String id, Point position, int actionPeriod,
-                     int animationPeriod, List<PImage> images) {
+                     int animationPeriod, List<PImage> images, int resourceLimit) {
         super(id, position, images, 0, actionPeriod, animationPeriod);
+        this.resourceLimit = resourceLimit;
     }
     protected boolean moveTo(WorldModel world,
                              Entity target, EventScheduler scheduler) {

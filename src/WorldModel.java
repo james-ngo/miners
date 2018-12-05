@@ -21,6 +21,16 @@ final class WorldModel {
     public static final int MINER_ACTION_PERIOD = 5;
     public static final int MINER_ANIMATION_PERIOD = 6;
 
+    public static final String WIZARD_KEY = "wizard";
+    public static final int WIZARD_NUM_PROPERTIES = 6;
+    public static final int WIZARD_ID = 1;
+    public static final int WIZARD_COL = 2;
+    public static final int WIZARD_ROW = 3;
+    public static final int WIZARD_ACTION_PERIOD = 4;
+    public static final int WIZARD_ANIMATION_PERIOD = 5;
+
+    public static final String MIDAS_KEY = "midas";
+
     public static final String OBSTACLE_KEY = "obstacle";
     public static final int OBSTACLE_NUM_PROPERTIES = 4;
     public static final int OBSTACLE_ID = 1;
@@ -112,6 +122,10 @@ final class WorldModel {
                     return this.parseBackground(properties, imageStore);
                 case MINER_KEY:
                     return this.parseMiner(properties, imageStore);
+                case WIZARD_KEY:
+                    return this.parseWizard(properties, imageStore);
+                case MIDAS_KEY:
+                    return this.parseMidas(properties, imageStore);
                 case OBSTACLE_KEY:
                     return this.parseObstacle(properties, imageStore);
                 case ORE_KEY:
@@ -153,6 +167,38 @@ final class WorldModel {
         }
 
         return properties.length == MINER_NUM_PROPERTIES;
+    }
+
+    public boolean parseWizard(String[] properties,
+                                        ImageStore imageStore) {
+        if (properties.length == WIZARD_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(properties[WIZARD_COL]),
+                    Integer.parseInt(properties[WIZARD_ROW]));
+            Entity entity = new Wizard(properties[WIZARD_ID],
+                    pt,
+                    imageStore.getImageList("wizard"),
+                    Integer.parseInt(properties[WIZARD_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[WIZARD_ACTION_PERIOD]));
+            this.tryAddEntity(entity);
+        }
+
+        return properties.length == WIZARD_NUM_PROPERTIES;
+    }
+
+    public boolean parseMidas(String[] properties,
+                               ImageStore imageStore) {
+        if (properties.length == WIZARD_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(properties[WIZARD_COL]),
+                    Integer.parseInt(properties[WIZARD_ROW]));
+            Entity entity = new Midas(properties[WIZARD_ID],
+                    pt,
+                    imageStore.getImageList("midas"),
+                    Integer.parseInt(properties[WIZARD_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[WIZARD_ACTION_PERIOD]));
+            this.tryAddEntity(entity);
+        }
+
+        return properties.length == WIZARD_NUM_PROPERTIES;
     }
 
     public boolean parseObstacle(String[] properties,
